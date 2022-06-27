@@ -1,5 +1,20 @@
 [
-    {"id": "64de3109-dffe-4b66-bc7f-627983b5792d", "name": "Accessoires"},
-    {"id": "c19af4a9-3811-4453-b30f-450ebf23488f", "name": "Technology"},
-    {"id": "0f52d345-4462-4348-8dcc-7d3a8dac0b70", "name": "Beauty"}
+  {
+    "id": "64de3109-dffe-4b66-bc7f-627983b5792d",
+    "slug": "accessories",
+    "name": "Accessories",
+    "hero": "hero-accessories.jpg"
+  },
+  {
+    "id": "c19af4a9-3811-4453-b30f-450ebf23488f",
+    "slug": "technology",
+    "name": "Technology",
+    "hero": "hero-technology.jpg"
+  },
+  {
+    "id": "0f52d345-4462-4348-8dcc-7d3a8dac0b70",
+    "slug": "beauty",
+    "name": "Beauty",
+    "hero": "hero-beauty.jpg"
+  }
 ]
