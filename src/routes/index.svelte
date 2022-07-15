@@ -21,14 +21,14 @@
 </script>
 
 <script lang="ts">
-  import type { Category } from '$lib/sharedtypes/category';
-  import type { Product } from '$lib/sharedtypes/product';
+  import type { CategoryJson } from '$lib/domain/category';
+  import type { ProductJson } from '$lib/domain/product';
   import { Card, Image, SimpleGrid, Text } from '@svelteuidev/core';
 
   const formatPrice = (price: number) => `€ ${(price / 100).toFixed(2)}`;
 
-  export let category: Category;
-  export let products: Product[];
+  export let category: CategoryJson;
+  export let products: ProductJson[];
 </script>
 
 <a

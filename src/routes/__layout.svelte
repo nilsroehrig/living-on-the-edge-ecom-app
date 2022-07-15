@@ -15,10 +15,10 @@
 
 <script lang="ts">
   import Cart from '$lib/components/Cart.svelte';
-  import type { Category } from '$lib/sharedtypes/category';
+  import type { CategoryJson } from '$lib/domain/category';
   import { Container, Group } from '@svelteuidev/core';
 
-  export let categories: Category[];
+  export let categories: CategoryJson[];
 </script>
 
 <header>

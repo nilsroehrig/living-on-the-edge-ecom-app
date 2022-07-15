@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Product } from '$lib/sharedtypes/product'
+  import type { ProductJson } from '$lib/domain/product'
 
-  export let product: Product
+  export let product: ProductJson
 </script>
 
 Das gewünschte Produkt ist vorhanden.
