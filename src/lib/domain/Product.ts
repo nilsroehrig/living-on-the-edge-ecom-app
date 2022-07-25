@@ -7,7 +7,7 @@ export interface Product {
   price: number;
   brand: string;
   origin: string;
-  category: Category | undefined;
+  category: Category | string | undefined;
   filename: string;
 }
 

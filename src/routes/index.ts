@@ -1,4 +1,5 @@
-import products from '$lib/data/products.json';
+import { getRandomCategory } from '$lib/services/CategoryService';
+import { getMultipleProducts } from '$lib/services/ProductService';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const featuredIds = [
@@ -10,10 +11,12 @@ const featuredIds = [
   '98acf652-8a3d-451e-9342-42f982db46e0', // kinn lotion
 ];
 
-export const get: RequestHandler = async () => {
+//@ts-ignore
+export const get: RequestHandler = async (event) => {
   return {
     body: {
-      products: products.filter((product) => featuredIds.includes(product.id)),
+      category: await getRandomCategory(),
+      products: await getMultipleProducts(featuredIds),
     },
   };
 };

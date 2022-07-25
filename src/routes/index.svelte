@@ -1,28 +1,6 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit';
-
-  export const load: Load = async ({ fetch }) => {
-    const randomCategoryUrl = `/api/categories/random`;
-    const featuredProductsUrl = '/api/products/featured';
-
-    const randomCategoryPromise = fetch(randomCategoryUrl);
-    const featuredProductPromise = fetch(featuredProductsUrl);
-
-    const [randomCategoryResponse, featuredProductsResponse] =
-      await Promise.all([randomCategoryPromise, featuredProductPromise]);
-
-    const { category } = await randomCategoryResponse.json();
-    const { products } = await featuredProductsResponse.json();
-
-    return {
-      props: { category, products },
-    };
-  };
-</script>
-
 <script lang="ts">
   import type { Category } from '$lib/domain/Category';
-  import { Card, Image, SimpleGrid, Text } from '@svelteuidev/core';
+  import { Card, Image, SimpleGrid } from '@svelteuidev/core';
   import type { Product } from '$lib/domain/Product';
 
   const formatPrice = (price: number) => `€ ${(price / 100).toFixed(2)}`;
