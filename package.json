@@ -23,6 +23,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@svelteuidev/core": "^0.6.9"
+    "@svelteuidev/core": "^0.6.9",
+    "prelude-ts": "^1.0.4"
   }
 }

@@ -1,4 +1,4 @@
-import { Category, type CategoryJson } from './category';
+import { Category, type CategoryJson } from './Category';
 
 export interface ProductJson {
   id: string;
@@ -22,6 +22,10 @@ export class Product {
     private _category: Category,
     private _filename: string
   ) {}
+
+  get category() {
+    return this._category;
+  }
 
   static fromProductJson({
     id,

@@ -15,30 +15,33 @@
 
 <script lang="ts">
   import Cart from '$lib/components/Cart.svelte';
-  import type { CategoryJson } from '$lib/domain/category';
+  import type { CategoryJson } from '$lib/domain/Category';
   import { Container, Group } from '@svelteuidev/core';
+  import { SvelteUIProvider } from '@svelteuidev/core';
 
   export let categories: CategoryJson[];
 </script>
 
-<header>
-  <Container>
-    <Group position="apart">
-      <div class="brand">svekom</div>
-      <div class="cart"><Cart /></div>
-    </Group>
-  </Container>
-</header>
-<nav>
-  <Container>
-    <Group position="apart" align="center">
-      {#each categories as category}
-        <a href="/categories/{category.slug}">{category.name}</a>
-      {/each}
-    </Group>
-  </Container>
-</nav>
-<Container><slot /></Container>
+<SvelteUIProvider ssr>
+  <header>
+    <Container>
+      <Group position="apart">
+        <div class="brand">svekom</div>
+        <div class="cart"><Cart /></div>
+      </Group>
+    </Container>
+  </header>
+  <nav>
+    <Container>
+      <Group position="apart" align="center">
+        {#each categories as category}
+          <a href="/categories/{category.slug}">{category.name}</a>
+        {/each}
+      </Group>
+    </Container>
+  </nav>
+  <Container><slot /></Container>
+</SvelteUIProvider>
 
 <style>
   header,
