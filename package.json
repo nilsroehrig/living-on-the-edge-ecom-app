@@ -25,6 +25,7 @@
   "type": "module",
   "dependencies": {
     "@svelteuidev/core": "^0.7.0",
+    "prelude-ts": "^1.0.4",
     "ramda": "^0.28.0"
   }
 }
