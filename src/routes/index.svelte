@@ -21,9 +21,9 @@
 </script>
 
 <script lang="ts">
-  import type { Category } from '$lib/sharedtypes/category';
-  import type { Product } from '$lib/sharedtypes/product';
+  import type { Category } from '$lib/domain/Category';
   import { Card, Image, SimpleGrid, Text } from '@svelteuidev/core';
+  import type { Product } from '$lib/domain/Product';
 
   const formatPrice = (price: number) => `€ ${(price / 100).toFixed(2)}`;
 

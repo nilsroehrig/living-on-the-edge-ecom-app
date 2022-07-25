@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
   import Cart from '$lib/components/Cart.svelte';
-  import type { Category } from '$lib/sharedtypes/category';
+  import type { Category } from '$lib/domain/Category';
   import { Container, Group, SvelteUIProvider } from '@svelteuidev/core';
 
   export const load: Load = async ({ fetch }) => {
