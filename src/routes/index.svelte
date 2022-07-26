@@ -2,8 +2,7 @@
   import type { Category } from '$lib/domain/Category';
   import { Card, Image, SimpleGrid } from '@svelteuidev/core';
   import type { Product } from '$lib/domain/Product';
-
-  const formatPrice = (price: number) => `€ ${(price / 100).toFixed(2)}`;
+import { formatPrice } from '$lib/util/format';
 
   export let category: Category;
   export let products: Product[];
