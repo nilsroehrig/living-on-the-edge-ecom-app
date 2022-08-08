@@ -1,17 +1,21 @@
-import products from '$lib/data/products.json'
-import categories from '$lib/data/categories.json'
+import products from '$lib/data/products.json';
+import categories from '$lib/data/categories.json';
 
-import type { RequestHandler } from '@sveltejs/kit'
-import { APPLICATION_JSON, CONTENT_TYPE } from '$lib/constants/http'
+import type { RequestHandler } from '@sveltejs/kit';
+import { APPLICATION_JSON, CONTENT_TYPE } from '$lib/constants/http';
+import showdown from 'showdown';
 
-export const get: RequestHandler = ({ params }) => {
-  const product = products.find((p) => p.id === params.id)
+const converter = new showdown.Converter();
+
+export const get: RequestHandler = async ({ params }) => {
+  const product = products.find((p) => p.id === params.id);
 
   if (typeof product === 'undefined') {
-    return { status: 404 }
+    return { status: 404 };
   }
 
-  const category = categories.find((c) => c.id === product.category)
+  const { description, category: categoryId, ...rest } = product;
+  const category = categories.find((c) => c.id === categoryId);
 
   return {
     status: 200,
@@ -20,11 +24,12 @@ export const get: RequestHandler = ({ params }) => {
     },
     body: {
       product: {
-        ...product,
+        ...rest,
         category: {
           ...category,
         },
+        description: converter.makeHtml(product.description),
       },
     },
-  }
-}
+  };
+};

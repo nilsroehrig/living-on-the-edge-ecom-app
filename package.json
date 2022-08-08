@@ -16,6 +16,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@types/ramda": "^0.28.15",
+    "@types/showdown": "^2.0.0",
     "prettier": "^2.7.1",
     "svelte": "^3.49.0",
     "svelte-check": "^2.8.0",
@@ -28,6 +29,7 @@
   "dependencies": {
     "@svelteuidev/core": "^0.7.0",
     "prelude-ts": "^1.0.4",
-    "ramda": "^0.28.0"
+    "ramda": "^0.28.0",
+    "showdown": "^2.1.0"
   }
 }

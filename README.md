@@ -1,18 +1,15 @@
-# create-svelte
+# Svekom
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloudflare Pages"
 
-## Creating a project
+## Todos
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
-```
+- [x] Startpage
+- [ ] Product Detail Page
+- [ ] Category Page
+- [ ] Basket Overview
+- [ ] Add-to-Cart
+- [ ] Desktop Styling
 
 ## Developing
 

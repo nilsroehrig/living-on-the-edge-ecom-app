@@ -2,7 +2,9 @@
   import type { Category } from '$lib/domain/Category';
   import { Card, Image, SimpleGrid } from '@svelteuidev/core';
   import type { Product } from '$lib/domain/Product';
-import { formatPrice } from '$lib/util/format';
+  import { formatPrice } from '$lib/util/format';
+
+  const Section = Card.Section;
 
   export let category: Category;
   export let products: Product[];
@@ -26,12 +28,16 @@ import { formatPrice } from '$lib/util/format';
   >
     {#each products as product}
       <Card shadow="sm" p="lg">
-        <Card.Section first padding="lg">
+        <Section first padding="lg">
           <Image src="/products/{product.filename}" height={80} alt="" />
-        </Card.Section>
+        </Section>
         <div class="card-content">
           <span class="brand">{product.brand}</span>
-          <h2>{product.name}</h2>
+          <h2>
+            <a href="/products/{product.id}" class="product-link"
+              >{product.name}</a
+            >
+          </h2>
           <span class="price">{formatPrice(product.price)}</span>
         </div>
       </Card>
@@ -81,6 +87,11 @@ import { formatPrice } from '$lib/util/format';
     line-height: calc(16 / 14);
     color: #666;
     font-weight: 400;
+  }
+
+  .product-link {
+    text-decoration: none;
+    color: inherit;
   }
 
   h2 {
