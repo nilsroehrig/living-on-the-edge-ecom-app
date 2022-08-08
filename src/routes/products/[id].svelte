@@ -2,6 +2,7 @@
   import type { Product } from '$lib/domain/Product';
   import { formatPrice } from '$lib/util/format';
   import { Badge, Card } from '@svelteuidev/core';
+  import AddToCart from '../../lib/components/AddToCart.svelte';
 
   const Section = Card.Section;
 
@@ -24,8 +25,11 @@
     <h2 class="title">{product.brand} {product.name}</h2>
     <p class="short-description">{product.shortDescription}</p>
     <div class="price">{formatPrice(product.price)}</div>
-    <div class="origin">Country of origin: {product.origin}</div>
-    <div class="description">{@html product.description}</div>
+    <AddToCart productId={product.id}/>
+    <div class="description">
+      <p class="origin">Country of origin: {product.origin}</p>
+      {@html product.description}
+    </div>
   </div>
 </article>
 
@@ -55,11 +59,17 @@
         font-weight: bold;
         margin: 1rem 0;
         padding-bottom: 1rem;
-        box-shadow: inset 0 -1px 0 0 #f0f0f0;
+        box-shadow: inset 0 -1px 0 0 #DDD;
     }
 
     .description {
-        font-size: 1rem;
+        box-shadow: inset 0 1px 0 0 #DDD;
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+
+    .origin {
+        margin-top: 0;
     }
 
     p {
