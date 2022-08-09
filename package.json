@@ -9,12 +9,15 @@
     "prepare": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:unit": "jest src/",
+    "test:unit:watch": "jest src/ --watch"
   },
   "devDependencies": {
     "@playwright/test": "^1.22.2",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/jest": "^28.1.6",
     "@types/ramda": "^0.28.15",
     "@types/showdown": "^2.0.0",
     "prettier": "^2.7.1",
@@ -22,12 +25,15 @@
     "svelte-check": "^2.8.0",
     "svelte-hero-icons": "^4.1.3",
     "svelte-preprocess": "^4.10.7",
+    "ts-jest": "^28.0.7",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "wait-for-expect": "^3.0.2"
   },
   "type": "module",
   "dependencies": {
     "@svelteuidev/core": "^0.7.0",
+    "jest": "^28.1.3",
     "prelude-ts": "^1.0.4",
     "ramda": "^0.28.0",
     "showdown": "^2.1.0"

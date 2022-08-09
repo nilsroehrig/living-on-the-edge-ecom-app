@@ -5,10 +5,13 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 ## Todos
 
 - [x] Startpage
-- [ ] Product Detail Page
+- [x] Product Detail Page
 - [ ] Category Page
 - [ ] Basket Overview
 - [ ] Add-to-Cart
+- [ ] Build for Cloudflare
+- [ ] Adapt products and categories to Workers KV
+- [ ] Use Durable Objects for Basket
 - [ ] Desktop Styling
 
 ## Developing
