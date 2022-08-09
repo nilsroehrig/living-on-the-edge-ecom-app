@@ -1,9 +1,11 @@
 import {
   __,
+  add,
   append,
   find,
   has,
   modify,
+  multiply,
   not,
   pathEq,
   reduce,
@@ -84,7 +86,11 @@ export function createCartStore(value: CartModel = { items: [] }): CartStore {
       return update(modify('items', reduce<CartItem, CartItem[]>(reducer, [])));
     },
     value(): number {
-      throw 'Not implemented yet';
+      return reduce(
+        (acc, it) => add(acc, multiply(it.product.price, it.count)),
+        0,
+        get(store).items
+      );
     },
   };
 }

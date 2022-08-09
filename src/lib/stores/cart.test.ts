@@ -189,7 +189,7 @@ describe('retrieving items', () => {
   });
 });
 
-/*describe('cart value', () => {
+describe('cart value', () => {
   beforeEach(async () => {
     store = createCartStore({
       items: [
@@ -200,5 +200,23 @@ describe('retrieving items', () => {
     unsubscribe = store.subscribe((data) => (storeData = data));
   });
 
+  it('calculates correct prize', () => {
+    expect(store.value()).toEqual(464700);
+  });
+
+  it('calculates correct prize after adding', () => {
+    store.addItem({ product: bodyOil, count: 1 });
+    return waitFor(() => {
+      expect(store.value()).toEqual(466495);
+    });
+  });
+
+  it('calculates correct prize after removal', () => {
+    store.removeItem({ productId: gameBoyColor.id });
+    return waitFor(() => {
+      expect(store.value()).toEqual(389700);
+    });
+  });
+
   afterEach(cleanUp);
-})*/
+});
