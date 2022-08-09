@@ -40,16 +40,24 @@ const gameBoyColor = {
   filename: 'technology-console-gbc.jpg',
 };
 
-describe('adding items', () => {
-  let storeData: CartModel, unsubscribe: Unsubscriber, store: CartStore;
+let storeData: CartModel, unsubscribe: Unsubscriber, store: CartStore;
 
+function cleanUp() {
+  unsubscribe();
+  // @ts-ignore
+  store = storeData = unsubscribe = undefined;
+}
+
+describe('adding items', () => {
   beforeEach(() => {
     store = createCartStore();
     unsubscribe = store.subscribe((data) => (storeData = data));
   });
 
+  afterEach(cleanUp);
+
   it('adds test item to cart store', async () => {
-    await store.addItem({ product: goldenSunglasses, count: 1 });
+    store.addItem({ product: goldenSunglasses, count: 1 });
 
     return waitFor(() => {
       expect(storeData).toEqual({
@@ -59,8 +67,8 @@ describe('adding items', () => {
   });
 
   it('increases item count when product is already in cart', async () => {
-    await store.addItem({ product: goldenSunglasses, count: 1 });
-    await store.addItem({ product: goldenSunglasses, count: 2 });
+    store.addItem({ product: goldenSunglasses, count: 1 });
+    store.addItem({ product: goldenSunglasses, count: 2 });
 
     return waitFor(() => {
       expect(storeData).toEqual({
@@ -70,8 +78,8 @@ describe('adding items', () => {
   });
 
   it('adds different items to cart', async () => {
-    await store.addItem({ product: goldenSunglasses, count: 1 });
-    await store.addItem({ product: gameBoyColor, count: 1 });
+    store.addItem({ product: goldenSunglasses, count: 1 });
+    store.addItem({ product: gameBoyColor, count: 1 });
 
     return waitFor(() => {
       expect(storeData).toEqual({
@@ -82,8 +90,41 @@ describe('adding items', () => {
       });
     });
   });
+});
 
-  afterEach(() => {
-    unsubscribe();
+describe('removing items', () => {
+  beforeEach(async () => {
+    store = createCartStore({
+      items: [
+        { product: goldenSunglasses, count: 3 },
+        { product: gameBoyColor, count: 3 },
+      ],
+    });
+    unsubscribe = store.subscribe((data) => (storeData = data));
+  });
+
+  afterEach(cleanUp);
+
+  it('removes a single item from cart completely', async () => {
+    store.removeItem({ productId: gameBoyColor.id });
+
+    return waitFor(() => {
+      expect(storeData).toEqual({
+        items: [{ product: goldenSunglasses, count: 3 }],
+      });
+    });
+  });
+
+  it('removes a specific amount of an item from cart', async () => {
+    store.removeItem({ productId: gameBoyColor.id, count: 1 });
+
+    return waitFor(() => {
+      expect(storeData).toEqual({
+        items: [
+          { product: goldenSunglasses, count: 3 },
+          { product: gameBoyColor, count: 2 },
+        ],
+      });
+    });
   });
 });
