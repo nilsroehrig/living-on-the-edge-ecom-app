@@ -9,7 +9,7 @@ import {
   reduce,
   subtract,
 } from 'ramda';
-import { type Readable, writable } from 'svelte/store';
+import { get, type Readable, writable } from 'svelte/store';
 import type { CategorizedProduct } from '../domain/Product';
 
 interface CartItem {
@@ -35,7 +35,8 @@ const hasId = pathEq(['product', 'id']);
 const hasCount = has('count');
 
 export function createCartStore(value: CartModel = { items: [] }): CartStore {
-  const { update, subscribe } = writable<CartModel>(value);
+  const store = writable<CartModel>(value);
+  const { update, subscribe } = store;
 
   return {
     subscribe,
@@ -53,8 +54,8 @@ export function createCartStore(value: CartModel = { items: [] }): CartStore {
         return model;
       });
     },
-    items() {
-      throw 'Not implemented yet';
+    items(): CartItem[] {
+      return get(store).items;
     },
     removeItem(itemToBeRemoved): void {
       const reducer = (newItems: CartItem[], currentItem: CartItem) => {

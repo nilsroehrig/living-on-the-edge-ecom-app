@@ -40,6 +40,25 @@ const gameBoyColor = {
   filename: 'technology-console-gbc.jpg',
 };
 
+const bodyOil = {
+  id: '9b036bab-cbfb-4490-8db2-24ccaf9755df',
+  name: "I'm Fabulous Body Oil",
+  shortDescription:
+    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
+  description:
+    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDonec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.\n\nIn enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis.\n',
+  price: 1795,
+  brand: 'St Barth',
+  origin: 'Molvanîa',
+  category: {
+    id: '0f52d345-4462-4348-8dcc-7d3a8dac0b70',
+    slug: 'beauty',
+    name: 'Beauty',
+    hero: 'hero-beauty.jpg',
+  },
+  filename: 'beauty-oil-fabulous.jpg',
+};
+
 let storeData: CartModel, unsubscribe: Unsubscriber, store: CartStore;
 
 function cleanUp() {
@@ -128,3 +147,58 @@ describe('removing items', () => {
     });
   });
 });
+
+describe('retrieving items', () => {
+  beforeEach(async () => {
+    store = createCartStore({
+      items: [
+        { product: goldenSunglasses, count: 3 },
+        { product: gameBoyColor, count: 3 },
+      ],
+    });
+    unsubscribe = store.subscribe((data) => (storeData = data));
+  });
+
+  afterEach(cleanUp);
+
+  it('returns all cart items', () => {
+    expect(store.items()).toEqual([
+      { product: goldenSunglasses, count: 3 },
+      { product: gameBoyColor, count: 3 },
+    ]);
+  });
+
+  it('returns all cart items after adding', () => {
+    store.addItem({ product: bodyOil, count: 1 });
+
+    return waitFor(() => {
+      expect(store.items()).toEqual([
+        { product: goldenSunglasses, count: 3 },
+        { product: gameBoyColor, count: 3 },
+        { product: bodyOil, count: 1 },
+      ]);
+    });
+  });
+
+  it('returns all cart items after removing', () => {
+    store.removeItem({ productId: gameBoyColor.id });
+
+    return waitFor(() => {
+      expect(store.items()).toEqual([{ product: goldenSunglasses, count: 3 }]);
+    });
+  });
+});
+
+/*describe('cart value', () => {
+  beforeEach(async () => {
+    store = createCartStore({
+      items: [
+        { product: goldenSunglasses, count: 3 },
+        { product: gameBoyColor, count: 3 },
+      ],
+    });
+    unsubscribe = store.subscribe((data) => (storeData = data));
+  });
+
+  afterEach(cleanUp);
+})*/

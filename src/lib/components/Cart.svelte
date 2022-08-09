@@ -2,13 +2,13 @@
   import { Icon, ShoppingCart } from 'svelte-hero-icons';
   import { readable, type Readable } from 'svelte/store';
 
-  export let basketValue: Readable<number> = readable(9999999);
+  export let cartValue: Readable<number> = readable(9999999);
 
-  $: formattedBasketValue = `${($basketValue / 100).toFixed(2)} €`;
+  $: formattedCartValue = `${($cartValue / 100).toFixed(2)} €`;
 </script>
 
 <a href="/checkout/basket">
-  <span class="value">{formattedBasketValue}</span>
+  <span class="value">{formattedCartValue}</span>
   <Icon src={ShoppingCart} size="1.5rem" />
 </a>
 

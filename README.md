@@ -7,11 +7,11 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 - [x] Startpage
 - [x] Product Detail Page
 - [ ] Category Page
-- [ ] Basket Overview
+- [ ] Cart Overview
 - [ ] Add-to-Cart
 - [ ] Build for Cloudflare
 - [ ] Adapt products and categories to Workers KV
-- [ ] Use Durable Objects for Basket
+- [ ] Use Durable Objects for Cart
 - [ ] Desktop Styling
 
 ## Developing
