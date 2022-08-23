@@ -1,96 +1,113 @@
+import type { CategorizedProduct, Product } from '$lib/domain/Product';
 import {
-  __,
-  add,
-  append,
-  find,
-  has,
-  modify,
-  multiply,
-  not,
-  pathEq,
-  reduce,
-  subtract,
+	__,
+	add,
+	find,
+	gt,
+	identity,
+	ifElse,
+	isNil,
+	map,
+	modify,
+	negate,
+	pathEq,
+	pipe,
+	propSatisfies,
+	reduce,
+	reject,
+	subtract,
 } from 'ramda';
-import { get, type Readable, writable } from 'svelte/store';
-import type { CategorizedProduct } from '../domain/Product';
+import { type Readable, writable } from 'svelte/store';
 
 interface CartItem {
-  product: CategorizedProduct;
-  count: number;
+	product: CategorizedProduct;
+	count: number;
 }
 
 export interface CartModel {
-  items: CartItem[];
+	items: CartItem[];
+	value: number;
 }
 
 export interface CartStore extends Readable<CartModel> {
-  addItem(item: CartItem): void;
+	addItem(product: CategorizedProduct, amount?: number): void;
 
-  removeItem(item: { productId: string; count?: number }): void;
-
-  items(): CartItem[];
-
-  value(): number;
+	removeItem(productId: string, amount?: number): void;
 }
 
-const hasId = pathEq(['product', 'id']);
-const hasCount = has('count');
+const productIdEquals = pathEq(['product', 'id']);
+const calculateValue = reduce(
+	(acc: number, item: CartItem) => acc + item.product.price * item.count,
+	0
+);
 
-export function createCartStore(value: CartModel = { items: [] }): CartStore {
-  const store = writable<CartModel>(value);
-  const { update, subscribe } = store;
+export function createCartStore(items: CartItem[] = []): CartStore {
+	const innerStore = writable<CartModel>({
+		items,
+		value: calculateValue(items),
+	});
+	const { update, subscribe } = innerStore;
 
-  return {
-    subscribe,
-    addItem(item): void {
-      if (item.count <= 0) return;
+	return {
+		subscribe,
+		addItem(product: CategorizedProduct, amount = 1): void {
+			if (amount <= 0) {
+				throw new TypeError(
+					'"amount" needs to be greater 0 but was "' + amount + '"'
+				);
+			}
 
-      return update((model) => {
-        const existingProduct = find(hasId(item.product.id), model.items);
-        if (existingProduct != undefined) {
-          existingProduct.count += item.count;
-        } else {
-          model.items.push(item);
-        }
+			return update((model) => {
+				const existingProduct = find(productIdEquals(product.id), model.items);
 
-        return model;
-      });
-    },
-    items(): CartItem[] {
-      return get(store).items;
-    },
-    removeItem(itemToBeRemoved): void {
-      const reducer = (newItems: CartItem[], currentItem: CartItem) => {
-        if (not(hasId(itemToBeRemoved.productId, currentItem))) {
-          return append(currentItem, newItems);
-        }
+				if (existingProduct != undefined) {
+					existingProduct.count += amount;
+				} else {
+					model.items.push({ product, count: amount });
+				}
 
-        if (not(hasCount(itemToBeRemoved))) {
-          return newItems;
-        }
+				return {
+					items: model.items,
+					value: calculateValue(model.items),
+				};
+			});
+		},
+		removeItem(productId: string, amount?: number): void {
+			return update((model) => {
+				const { items } = model;
 
-        if (currentItem.count - itemToBeRemoved.count! < 0) {
-          return newItems;
-        }
+				if (isNil(amount)) {
+					const filteredItems = reject(productIdEquals(productId), items);
+					return {
+						items: filteredItems,
+						value: calculateValue(filteredItems),
+					};
+				}
 
-        return append(
-          modify(
-            'count',
-            subtract(__, itemToBeRemoved.count as number),
-            currentItem
-          ),
-          newItems
-        );
-      };
+				const rejectIfCountIsZeroOrLower = reject(
+					propSatisfies(gt(0), 'count')
+				);
 
-      return update(modify('items', reduce<CartItem, CartItem[]>(reducer, [])));
-    },
-    value(): number {
-      return reduce(
-        (acc, it) => add(acc, multiply(it.product.price, it.count)),
-        0,
-        get(store).items
-      );
-    },
-  };
+				const changeAmountIfItemMatchesProductId: (
+					items: CartItem[]
+				) => CartItem[] = map(
+					ifElse(
+						productIdEquals(productId),
+						modify('count', subtract(__, amount)),
+						identity
+					)
+				);
+
+				const updatedItems = pipe(
+					changeAmountIfItemMatchesProductId,
+					rejectIfCountIsZeroOrLower
+				)(model.items);
+
+				return {
+					items: updatedItems,
+					value: calculateValue(updatedItems),
+				};
+			});
+		},
+	};
 }
