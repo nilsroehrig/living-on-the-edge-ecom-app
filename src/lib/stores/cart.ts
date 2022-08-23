@@ -1,7 +1,6 @@
-import type { CategorizedProduct, Product } from '$lib/domain/Product';
+import type { Product } from '$lib/domain/Product';
 import {
 	__,
-	add,
 	find,
 	gt,
 	identity,
@@ -9,7 +8,6 @@ import {
 	isNil,
 	map,
 	modify,
-	negate,
 	pathEq,
 	pipe,
 	propSatisfies,
@@ -20,7 +18,7 @@ import {
 import { type Readable, writable } from 'svelte/store';
 
 interface CartItem {
-	product: CategorizedProduct;
+	product: Product;
 	count: number;
 }
 
@@ -30,7 +28,7 @@ export interface CartModel {
 }
 
 export interface CartStore extends Readable<CartModel> {
-	addItem(product: CategorizedProduct, amount?: number): void;
+	addItem(product: Product, amount?: number): void;
 
 	removeItem(productId: string, amount?: number): void;
 }
@@ -50,7 +48,7 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 
 	return {
 		subscribe,
-		addItem(product: CategorizedProduct, amount = 1): void {
+		addItem(product: Product, amount = 1): void {
 			if (amount <= 0) {
 				throw new TypeError(
 					'"amount" needs to be greater 0 but was "' + amount + '"'
