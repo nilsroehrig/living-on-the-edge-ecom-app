@@ -217,13 +217,37 @@ describe('cart localStorage', () => {
 		global.localStorage = new Storage(null, { strict: false });
 	});
 
-	it('mirrors changes in store to localStorage', () => {
+	it('mirrors item additions in localStorage', () => {
 		store.addItem(goldenSunglasses);
 
 		return waitFor(() => {
 			expect(global.localStorage.getItem('cart')).not.toBeNull();
+			expect(JSON.parse(global.localStorage.getItem('cart')!)).toEqual({
+				items: [{ product: goldenSunglasses, count: 1 }],
+				value: 129900,
+			});
 		});
 	});
+
+	it('mirrors item removals in localStorage', async () => {
+		expect(global.localStorage.getItem('cart')).toBeNull();
+
+		store.addItem(goldenSunglasses);
+
+		await waitFor(() => {
+			expect(global.localStorage.getItem('cart')).not.toBeNull();
+		});
+
+		store.removeItem(goldenSunglasses.id)
+
+		return waitFor(() => {
+			expect(global.localStorage.getItem('cart')).not.toBeNull();
+			expect(JSON.parse(global.localStorage.getItem('cart')!)).toEqual({
+				items: [],
+				value: 0,
+			});
+		});
+	})
 
 	afterEach(() => {
 		global.localStorage.removeItem('cart');

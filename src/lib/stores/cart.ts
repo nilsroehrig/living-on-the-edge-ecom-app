@@ -80,10 +80,14 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 
 				if (isNil(amount)) {
 					const filteredItems = reject(productIdEquals(productId), items);
-					return {
+					const newStoreValue = {
 						items: filteredItems,
 						value: calculateValue(filteredItems),
 					};
+
+					localStorage.setItem('cart', JSON.stringify(newStoreValue));
+
+					return newStoreValue;
 				}
 
 				const rejectIfCountIsZeroOrLower = reject(
@@ -105,10 +109,14 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					rejectIfCountIsZeroOrLower
 				)(model.items);
 
-				return {
+				const newStoreValue = {
 					items: updatedItems,
 					value: calculateValue(updatedItems),
 				};
+
+				// localStorage.setItem('cart', JSON.stringify(newStoreValue));
+
+				return newStoreValue;
 			});
 		},
 	};
