@@ -2,23 +2,13 @@
 	import type { Product } from '$lib/domain/Product';
 	import { formatPrice } from '$lib/util/format';
 	import { Badge, Card } from '@svelteuidev/core';
-	import { getContext } from 'svelte';
 	import AddToCart from '../../lib/components/AddToCart.svelte';
-	import { type CartStore } from '../../lib/stores/cart';
 
 	const Section = Card.Section;
 
 	export let product: Product = {} as Product;
 
 	const { category } = product;
-	const cart = getContext<CartStore>('cart');
-
-	function handleAddToCart (event: CustomEvent<{ productId: string, count: number }>) {
-		if (event.detail.productId !== product.id) return;
-		cart.addItem(product, event.detail.count);
-	}
-
-
 </script>
 
 <article>
@@ -35,7 +25,7 @@
 		<h2 class="title">{product.brand} {product.name}</h2>
 		<p class="short-description">{product.shortDescription}</p>
 		<div class="price">{formatPrice(product.price)}</div>
-		<AddToCart productId={product.id} on:add_to_cart_clicked={handleAddToCart}/>
+		<AddToCart {product}/>
 		<div class="description">
 			<p class="origin">Country of origin: {product.origin}</p>
 			{@html product.description}

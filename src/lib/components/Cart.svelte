@@ -6,7 +6,7 @@
 	$: formattedCartValue = `${(cartValue / 100).toFixed(2)} €`;
 </script>
 
-<a href="/checkout/basket">
+<a href="/checkout/cart">
 	<span class="value">{formattedCartValue}</span>
 	<Icon src={ShoppingCart} size="1.5rem"/>
 </a>

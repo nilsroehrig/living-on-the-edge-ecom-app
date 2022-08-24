@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { Icon, MinusSm, PlusSm, ShoppingCart } from 'svelte-hero-icons';
 	import { Button } from '@svelteuidev/core';
+	import { getContext } from 'svelte';
+	import { Icon, MinusSm, PlusSm, ShoppingCart } from 'svelte-hero-icons';
+	import type { Product } from '../domain/Product';
+	import type { CartStore } from '../stores/cart';
 
 	function checkCount (c: number) {
 		return c >= 0 && /^(([1-9]\d*)(\d*))$/.test(String(c));
 	}
 
-	const dispatch = createEventDispatcher();
+	const cart = getContext<CartStore>('cart');
 
-	export let productId = '1';
+	export let product: Product;
+	export let showAmountHandler = true;
 
 	let count = 1;
 	let oldCount = count;
@@ -27,27 +30,27 @@
 	const decrease = () => count = Number(count) - 1;
 	const increase = () => count = Number(count) + 1;
 	const addToCart = () => {
-		dispatch('add_to_cart_clicked', { productId, count });
+		cart.addItem(product, count);
 		count = 1;
 	};
 </script>
 
 <div class="add-to-cart">
-	<div class="amount-handler">
-		<Button on:click={decrease} compact>
-			<Icon src={MinusSm} size=".75rem"></Icon>
-		</Button>
+	<!--{#if showAmountHandler}-->
+	<!--	<div class="amount-handler">-->
+	<!--		<Button on:click={decrease} compact>-->
+	<!--			<Icon src={MinusSm} size=".75rem"></Icon>-->
+	<!--		</Button>-->
 
+	<!--		<input class="count" type="text" bind:value={count}/>-->
 
-		<input class="count" type="text" bind:value={count}/>
-
-
-		<Button on:click={increase} compact>
-			<Icon src={PlusSm} size=".75rem"></Icon>
-		</Button>
-	</div>
-	<Button class="add-to-cart-button" on:click={addToCart}>
-		<Icon src="{ShoppingCart}" size="1rem" slot="leftIcon"/>
+	<!--		<Button on:click={increase} compact>-->
+	<!--			<Icon src={PlusSm} size=".75rem"></Icon>-->
+	<!--		</Button>-->
+	<!--	</div>-->
+	<!--{/if}-->
+	<Button class="add-to-cart-button" on:click={addToCart} size="lg" fullSize>
+		<Icon src="{ShoppingCart}" size="1.5rem" slot="leftIcon"/>
 		Add to cart
 	</Button>
 </div>
