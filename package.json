@@ -20,6 +20,7 @@
 		"@types/jest": "^28.1.7",
 		"@types/ramda": "^0.28.15",
 		"@types/showdown": "^2.0.0",
+		"dom-storage": "^2.1.0",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.49.0",

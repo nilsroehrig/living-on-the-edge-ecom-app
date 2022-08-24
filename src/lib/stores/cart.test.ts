@@ -1,6 +1,7 @@
 import waitFor from 'wait-for-expect';
 import type { Unsubscriber } from 'svelte/store';
 import { type CartModel, type CartStore, createCartStore } from './cart';
+import Storage from 'dom-storage';
 
 const goldenSunglasses = {
 	id: '3560da91-ad6a-4586-922d-301b4b929871',
@@ -69,7 +70,7 @@ function cleanUp() {
 
 describe('adding items', () => {
 	beforeEach(() => {
-		store = createCartStore();
+		store = createCartStore([]);
 		unsubscribe = store.subscribe((data) => (cartData = data));
 	});
 
@@ -77,7 +78,7 @@ describe('adding items', () => {
 
 	it.each([-1, 0])('throws if amount is less or equal zero', (amount) => {
 		expect(() => store.addItem(bodyOil, amount)).toThrow();
-	})
+	});
 
 	it('adds test item to cart store', async () => {
 		store.addItem(goldenSunglasses);
@@ -207,4 +208,24 @@ describe('cart value', () => {
 	});
 
 	afterEach(cleanUp);
+});
+
+describe('cart localStorage', () => {
+	beforeEach(async () => {
+		store = createCartStore([]);
+		// noinspection JSConstantReassignment
+		global.localStorage = new Storage(null, { strict: false });
+	});
+
+	it('mirrors changes in store to localStorage', () => {
+		store.addItem(goldenSunglasses);
+
+		return waitFor(() => {
+			expect(global.localStorage.getItem('cart')).not.toBeNull();
+		});
+	});
+
+	afterEach(() => {
+		global.localStorage.removeItem('cart');
+	});
 });

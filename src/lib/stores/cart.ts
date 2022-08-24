@@ -64,10 +64,14 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					model.items.push({ product, count: amount });
 				}
 
-				return {
+				let newStoreValue = {
 					items: model.items,
 					value: calculateValue(model.items),
 				};
+
+				localStorage.setItem('cart', JSON.stringify(newStoreValue));
+
+				return newStoreValue;
 			});
 		},
 		removeItem(productId: string, amount?: number): void {
