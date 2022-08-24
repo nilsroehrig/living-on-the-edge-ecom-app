@@ -24,15 +24,13 @@
 
 	const cart = createCartStore();
 	setContext('cart', cart);
-
-	console.log($cart)
 </script>
 
 <SvelteUIProvider ssr>
 	<header>
 		<Container>
 			<Group position="apart">
-				<div class="brand"><a href="/">svekom</div>
+				<div class="brand"><a href="/">svekom</a></div>
 				<div class="cart">
 					<Cart cartValue={$cart.value}/>
 				</div>
