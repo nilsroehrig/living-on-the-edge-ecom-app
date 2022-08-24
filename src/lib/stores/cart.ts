@@ -114,7 +114,7 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					value: calculateValue(updatedItems),
 				};
 
-				// localStorage.setItem('cart', JSON.stringify(newStoreValue));
+				localStorage.setItem('cart', JSON.stringify(newStoreValue));
 
 				return newStoreValue;
 			});

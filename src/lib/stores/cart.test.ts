@@ -229,7 +229,7 @@ describe('cart localStorage', () => {
 		});
 	});
 
-	it('mirrors item removals in localStorage', async () => {
+	it('mirrors complete item removal in localStorage', async () => {
 		expect(global.localStorage.getItem('cart')).toBeNull();
 
 		store.addItem(goldenSunglasses);
@@ -238,7 +238,7 @@ describe('cart localStorage', () => {
 			expect(global.localStorage.getItem('cart')).not.toBeNull();
 		});
 
-		store.removeItem(goldenSunglasses.id)
+		store.removeItem(goldenSunglasses.id);
 
 		return waitFor(() => {
 			expect(global.localStorage.getItem('cart')).not.toBeNull();
@@ -247,7 +247,28 @@ describe('cart localStorage', () => {
 				value: 0,
 			});
 		});
-	})
+	});
+
+	it('mirrors item count reduction in localStorage', async () => {
+		expect(global.localStorage.getItem('cart')).toBeNull();
+
+		store.addItem(goldenSunglasses, 2);
+
+		await waitFor(() => {
+			expect(global.localStorage.getItem('cart')).not.toBeNull();
+			const data = JSON.parse(global.localStorage.getItem('cart')!);
+			expect(data.items[0].count).toBe(2);
+			expect(data.value).toBe(259800);
+		});
+
+		store.removeItem(goldenSunglasses.id, 1);
+
+		return waitFor(() => {
+			const data = JSON.parse(global.localStorage.getItem('cart')!);
+			expect(data.items[0].count).toBe(1);
+			expect(data.value).toBe(129900);
+		});
+	});
 
 	afterEach(() => {
 		global.localStorage.removeItem('cart');
