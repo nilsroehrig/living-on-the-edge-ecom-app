@@ -16,6 +16,7 @@ import {
 	subtract,
 } from 'ramda';
 import { type Readable, writable } from 'svelte/store';
+import { None, Option, Some } from 'prelude-ts';
 
 interface CartItem {
 	product: Product;
@@ -40,10 +41,12 @@ const calculateValue = reduce(
 );
 
 export function createCartStore(items: CartItem[] = []): CartStore {
-	const innerStore = writable<CartModel>({
-		items,
-		value: calculateValue(items),
-	});
+	const innerStore = writable<CartModel>(
+		getCartStorage().getOrElse({
+			items,
+			value: calculateValue(items),
+		})
+	);
 	const { update, subscribe } = innerStore;
 
 	return {
@@ -69,7 +72,7 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					value: calculateValue(model.items),
 				};
 
-				localStorage.setItem('cart', JSON.stringify(newStoreValue));
+				setCartStorage(newStoreValue);
 
 				return newStoreValue;
 			});
@@ -85,7 +88,7 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 						value: calculateValue(filteredItems),
 					};
 
-					localStorage.setItem('cart', JSON.stringify(newStoreValue));
+					setCartStorage(newStoreValue);
 
 					return newStoreValue;
 				}
@@ -114,10 +117,22 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					value: calculateValue(updatedItems),
 				};
 
-				localStorage.setItem('cart', JSON.stringify(newStoreValue));
+				setCartStorage(newStoreValue);
 
 				return newStoreValue;
 			});
 		},
 	};
+}
+
+function setCartStorage(newValue: CartModel) {
+	if (typeof localStorage == 'undefined') return;
+
+	localStorage.setItem('cart', JSON.stringify(newValue));
+}
+
+function getCartStorage(): Some<CartModel> | None<CartModel> {
+	if (typeof localStorage == 'undefined') return Option.none();
+
+	return Option.ofNullable(localStorage.getItem('cart')).map(JSON.parse);
 }
