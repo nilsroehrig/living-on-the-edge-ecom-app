@@ -1,13 +1,11 @@
-import type { RequestHandler } from '@sveltejs/kit'
-import categories from '$lib/data/categories.json'
-import { CONTENT_TYPE, APPLICATION_JSON } from '$lib/constants/http'
+import { APPLICATION_JSON, CONTENT_TYPE } from '$lib/constants/http';
+import categories from '$lib/data/categories.json';
+import type { RequestHandler } from './$types';
 
-export const get: RequestHandler = () => {
-  return {
-    status: 200,
-    headers: {
-      [CONTENT_TYPE]: APPLICATION_JSON,
-    },
-    body: { categories },
-  }
-}
+export const GET: RequestHandler = () => {
+	return new Response(JSON.stringify({ categories }), {
+		headers: {
+			[CONTENT_TYPE]: APPLICATION_JSON,
+		},
+	});
+};

@@ -1,13 +1,13 @@
 <script lang="ts">
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	import DefaultGrid from '../../../lib/components/layout/DefaultGrid.svelte';
 	import ProductCard from '../../../lib/components/ProductCard.svelte';
 	import type { Category } from '../../../lib/domain/Category';
 	import type { CategorizedProduct } from '../../../lib/domain/Product';
 
-	export let category: Category;
-	export let products: CategorizedProduct[];
+	export let data;
+	let category: Category, products: CategorizedProduct[];
+
+	$: ({ category, products } = data);
 </script>
 
 <section>

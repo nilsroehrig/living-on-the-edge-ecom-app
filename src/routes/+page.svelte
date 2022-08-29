@@ -1,13 +1,14 @@
 <script lang="ts">
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	import type { Category } from '$lib/domain/Category';
 	import type { Product } from '$lib/domain/Product';
 	import { SimpleGrid } from '@svelteuidev/core';
 	import ProductCard from '../lib/components/ProductCard.svelte';
+	//import type { PageData } from './$types';
 
-	export let category: Category;
-	export let products: Product[];
+	export let data;
+	let category: Category, products: Product[];
+
+	$: ({ category, products } = data);
 </script>
 
 <a

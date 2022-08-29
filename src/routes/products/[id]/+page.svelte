@@ -1,16 +1,18 @@
 <script lang="ts">
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	import type { Product } from '$lib/domain/Product';
 	import { formatPrice } from '$lib/util/format';
 	import { Badge, Card } from '@svelteuidev/core';
 	import AddToCart from '../../../lib/components/AddToCart.svelte';
+	import type { Category } from '../../../lib/domain/Category';
 
 	const Section = Card.Section;
 
-	export let product: Product = {} as Product;
+	export let data;
+	let product: Product, category: Category | string;
 
-	const { category } = product;
+	$: ({ product } = data);
+	$: ({ category } = product);
+
 </script>
 
 <article>
