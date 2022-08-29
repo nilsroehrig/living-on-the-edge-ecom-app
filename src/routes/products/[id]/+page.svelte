@@ -1,8 +1,10 @@
 <script lang="ts">
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	import type { Product } from '$lib/domain/Product';
 	import { formatPrice } from '$lib/util/format';
 	import { Badge, Card } from '@svelteuidev/core';
-	import AddToCart from '../../lib/components/AddToCart.svelte';
+	import AddToCart from '../../../lib/components/AddToCart.svelte';
 
 	const Section = Card.Section;
 

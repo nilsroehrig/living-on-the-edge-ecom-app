@@ -1,6 +1,6 @@
 import { getRandomCategory } from '$lib/services/CategoryService';
 import { getMultipleProducts } from '$lib/services/ProductService';
-import type { RequestHandler } from '@sveltejs/kit';
+import type {  } from '@sveltejs/kit';
 
 const featuredIds = [
   '3560da91-ad6a-4586-922d-301b4b929871', // golden sunglasses

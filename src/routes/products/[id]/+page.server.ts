@@ -1,7 +1,7 @@
 import products from '$lib/data/products.json';
 import categories from '$lib/data/categories.json';
 
-import type { RequestHandler } from '@sveltejs/kit';
+import type {  } from '@sveltejs/kit';
 import { APPLICATION_JSON, CONTENT_TYPE } from '$lib/constants/http';
 import showdown from 'showdown';
 

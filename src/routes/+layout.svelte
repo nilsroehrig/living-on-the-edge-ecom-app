@@ -1,22 +1,26 @@
 <script lang="ts" context="module">
-	import Cart from '$lib/components/Cart.svelte';
-	import type { Category } from '$lib/domain/Category';
-	import type { Load } from '@sveltejs/kit';
-	import { Container, Group, SvelteUIProvider } from '@svelteuidev/core';
+	throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
 
-	export const load: Load = async ({ fetch }) => {
-		const url = `/api/categories`;
-		const response = await fetch(url);
-		const { categories } = await response.json();
+	// import Cart from '$lib/components/Cart.svelte';
+	// import type { Category } from '$lib/domain/Category';
+	// import type { Load } from '@sveltejs/kit';
+	// import { Container, Group, SvelteUIProvider } from '@svelteuidev/core';
 
-		return {
-			status: response.status,
-			props: { categories },
-		};
-	};
+	// export const load: Load = async ({ fetch }) => {
+	// 	const url = `/api/categories`;
+	// 	const response = await fetch(url);
+	// 	const { categories } = await response.json();
+
+	// 	return {
+	// 		status: response.status,
+	// 		props: { categories },
+	// 	};
+	// };
 </script>
 
 <script lang="ts">
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	import { setContext } from 'svelte';
 	import { createCartStore } from '../lib/stores/cart';
 

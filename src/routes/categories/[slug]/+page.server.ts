@@ -1,10 +1,10 @@
-import type { RequestHandler } from '@sveltejs/kit';
+import type {  } from '@sveltejs/kit';
 import { Future } from 'prelude-ts';
-import type { Category } from '../../lib/domain/Category';
-import type { CategorizedProduct } from '../../lib/domain/Product';
-import { getSingleCategoryBySlug } from '../../lib/services/CategoryService';
-import { getProductsByCategory } from '../../lib/services/ProductService';
-import type { Typify } from '../../lib/types/Utility';
+import type { Category } from '../../../lib/domain/Category';
+import type { CategorizedProduct } from '../../../lib/domain/Product';
+import { getSingleCategoryBySlug } from '../../../lib/services/CategoryService';
+import { getProductsByCategory } from '../../../lib/services/ProductService';
+import type { Typify } from '../../../lib/types/Utility';
 
 export const get: RequestHandler = async ({ params }) => {
 	const categoryOption = await getSingleCategoryBySlug(params.slug);
