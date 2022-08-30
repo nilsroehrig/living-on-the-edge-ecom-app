@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { Button } from '@svelteuidev/core';
 	import { getContext } from 'svelte';
-	import { ChevronRight, Icon, MinusSm, PlusSm } from 'svelte-hero-icons';
-	import type { Product } from '../../../lib/domain/Product';
+	import { ChevronRight, Icon } from 'svelte-hero-icons';
+	import AmountHandler from '../../../lib/components/AmountHandler.svelte';
 	import type { CartStore } from '../../../lib/stores/cart';
 	import { formatPrice } from '../../../lib/util/format.js';
 
 	const cart = getContext<CartStore>('cart');
-	const increase = (product: Product) => cart.addItem(product, 1);
-	const decrease = (product: Product) => cart.removeItem(product.id, 1);
 </script>
 <h1>Cart</h1>
 {#if cart.hasItems()}
@@ -21,17 +19,12 @@
 				</a>
 				<div class="price">
 					<div class="amount-handler">
-						<button class="left" on:click={() => decrease(item.product)}>
-							<Icon src={MinusSm} size="1rem" color="rgb(28, 126, 214)"></Icon>
-						</button>
-
-						<span class="count">{item.count}</span>
-
-						<button class="right" on:click={() => increase(item.product)}>
-							<Icon src={PlusSm} size="1rem" color="rgb(28, 126, 214)"></Icon>
-						</button>
+						<AmountHandler
+							count="{item.count}"
+							on:increase={() => cart.addItem(item.product, 1)}
+							on:decrease={() => cart.removeItem(item.product.id, 1)}
+						/>
 					</div>
-
 					<div class="unit-price">Unit <span>{formatPrice(item.product.price)}</span></div>
 					<div class="total-price">Total <span>{formatPrice(item.product.price * item.count)}</span></div>
 
@@ -46,7 +39,7 @@
 	<div class="checkout">
 		<Button size="md">
 			Proceed to checkout
-			<Icon src={ChevronRight} size="1rem" slot="rightIcon" />
+			<Icon src={ChevronRight} size="1rem" slot="rightIcon"/>
 		</Button>
 	</div>
 {/if}
@@ -107,46 +100,8 @@
 		display: flex;
 	}
 
-	button {
-		margin: 0;
-		padding: 0;
-		width: 40px;
-		height: 40px;
-		border: 1px solid rgb(28, 126, 214);
-		background-color: white;
-		color: rgb(28, 126, 214);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-	}
-
-	.left {
-		border-top-left-radius: 4px;
-		border-bottom-left-radius: 4px;
-	}
-
-	.right {
-		border-top-right-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
-
-	.count {
-		display: flex;
-		width: 40px;
-		height: 40px !important;
-		z-index: 2;
-		background: white;
-		border-top: 1px solid rgb(28, 126, 214);
-		border-bottom: 1px solid rgb(28, 126, 214);
-		box-sizing: border-box;
-		color: rgb(28, 126, 214);
-		justify-content: center;
-		align-items: center;
-	}
-
 	.unit-price {
-		text-align: center;
+		text-align: right;
 	}
 
 	.total-price {
