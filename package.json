@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@playwright/test": "^1.25.0",
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-cloudflare": "^1.0.0-next.32",
 		"@sveltejs/kit": "^1.0.0-next.445",
 		"@types/jest": "^28.1.7",
 		"@types/ramda": "^0.28.15",
