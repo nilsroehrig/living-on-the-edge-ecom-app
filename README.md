@@ -9,8 +9,8 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 - [x] Category Page
 - [x] Add-to-Cart
 - [x] Local Persistence for Cart (e.g. LocalStorage)
-- [ ] Cart Overview
-- [ ] Handle amount on cart overview
+- [x] Cart Overview
+- [x] Handle amount on cart overview
 - [ ] Build for Cloudflare
 - [ ] Adapt products and categories to Workers KV
 - [ ] Use Durable Objects for Cart

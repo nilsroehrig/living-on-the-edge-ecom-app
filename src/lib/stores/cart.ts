@@ -1,22 +1,7 @@
 import type { Product } from '$lib/domain/Product';
-import {
-	__,
-	find,
-	gt,
-	identity,
-	ifElse,
-	isNil,
-	map,
-	modify,
-	pathEq,
-	pipe,
-	propSatisfies,
-	reduce,
-	reject,
-	subtract,
-} from 'ramda';
-import { get, type Readable, writable } from 'svelte/store';
 import { None, Option, Some } from 'prelude-ts';
+import { find, isNil, pathEq, reduce, reject } from 'ramda';
+import { get, type Readable, writable } from 'svelte/store';
 
 interface CartItem {
 	product: Product;
@@ -95,24 +80,17 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 					return newStoreValue;
 				}
 
-				const rejectIfCountIsZeroOrLower = reject(
-					propSatisfies(gt(0), 'count')
-				);
+				const updatedItems = model.items.reduce((acc, item) => {
+					if (item.product.id === productId) {
+						item.count -= amount;
+					}
 
-				const changeAmountIfItemMatchesProductId: (
-					items: CartItem[]
-				) => CartItem[] = map(
-					ifElse(
-						productIdEquals(productId),
-						modify('count', subtract(__, amount)),
-						identity
-					)
-				);
+					if (item.count <= 0) {
+						return acc;
+					}
 
-				const updatedItems = pipe(
-					changeAmountIfItemMatchesProductId,
-					rejectIfCountIsZeroOrLower
-				)(model.items);
+					return acc.concat(item);
+				}, [] as CartItem[]);
 
 				const newStoreValue = {
 					items: updatedItems,

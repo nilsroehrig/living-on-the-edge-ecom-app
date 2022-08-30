@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Icon, MinusSm, PlusSm } from 'svelte-hero-icons';
+	import { Icon, MinusSm, PlusSm, Trash } from 'svelte-hero-icons';
 
 	export let count: number;
 
@@ -10,7 +10,7 @@
 </script>
 
 <button class="left" on:click={decrease}>
-	<Icon src={MinusSm} size="1rem" color="rgb(28, 126, 214)"></Icon>
+	<Icon src={count === 1 ? Trash : MinusSm} size="1rem" color="rgb(28, 126, 214)"></Icon>
 </button>
 
 <span class="count">{count}</span>

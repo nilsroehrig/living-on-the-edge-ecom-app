@@ -72,7 +72,7 @@ function cleanUp() {
 beforeEach(() => {
 	// noinspection JSConstantReassignment
 	global.localStorage = new Storage(null, { strict: false });
-})
+});
 
 describe('adding items', () => {
 	beforeEach(() => {
@@ -143,6 +143,21 @@ describe('removing items', () => {
 				{ product: goldenSunglasses, count: 3 },
 				{ product: gameBoyColor, count: 2 },
 			]);
+		});
+	});
+
+	it('removes an item completely, when last unit is removed', async () => {
+		store.removeItem(goldenSunglasses.id, 2);
+		store.removeItem(gameBoyColor.id, 3);
+
+		await waitFor(() => {
+			expect(cartData.items).toEqual([{ product: goldenSunglasses, count: 1 }]);
+		});
+
+		store.removeItem(goldenSunglasses.id, 1);
+
+		return waitFor(() => {
+			expect(cartData.items).toEqual([]);
 		});
 	});
 });
@@ -276,21 +291,30 @@ describe('cart localStorage', () => {
 	});
 
 	it('recreates in memory cart from localStorage', () => {
-		global.localStorage.setItem('cart', JSON.stringify({
-			items: [{product: goldenSunglasses, count: 2}, {product: bodyOil, count: 3}],
-			value: (goldenSunglasses.price * 2) + (bodyOil.price * 3)
-		}))
+		global.localStorage.setItem(
+			'cart',
+			JSON.stringify({
+				items: [
+					{ product: goldenSunglasses, count: 2 },
+					{ product: bodyOil, count: 3 },
+				],
+				value: goldenSunglasses.price * 2 + bodyOil.price * 3,
+			})
+		);
 
 		store = createCartStore();
-		unsubscribe = store.subscribe(storeData => cartData = storeData)
+		unsubscribe = store.subscribe((storeData) => (cartData = storeData));
 
 		return waitFor(() => {
-			expect(cartData.items).toEqual([{product: goldenSunglasses, count: 2}, {product: bodyOil, count: 3}]);
-		})
-	})
+			expect(cartData.items).toEqual([
+				{ product: goldenSunglasses, count: 2 },
+				{ product: bodyOil, count: 3 },
+			]);
+		});
+	});
 
 	afterEach(() => {
 		global.localStorage.removeItem('cart');
-		cleanUp()
+		cleanUp();
 	});
 });
