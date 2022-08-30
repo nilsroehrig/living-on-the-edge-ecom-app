@@ -13,6 +13,7 @@
 		"test:watch": "jest src/ --watch --no-cache"
 	},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^3.14.1",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-cloudflare": "^1.0.0-next.32",
 		"@sveltejs/kit": "^1.0.0-next.445",
