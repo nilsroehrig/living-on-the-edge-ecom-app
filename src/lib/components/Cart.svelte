@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Icon, ShoppingCart } from 'svelte-hero-icons';
+	import { formatPrice } from '../util/format';
 
 	export let cartValue: number = 0;
 
-	$: formattedCartValue = `${(cartValue / 100).toFixed(2)} €`;
+	$: formattedCartValue = formatPrice(cartValue);
 </script>
 
 <a href="/checkout/cart">

@@ -15,7 +15,7 @@ import {
 	reject,
 	subtract,
 } from 'ramda';
-import { type Readable, writable } from 'svelte/store';
+import { get, type Readable, writable } from 'svelte/store';
 import { None, Option, Some } from 'prelude-ts';
 
 interface CartItem {
@@ -32,6 +32,8 @@ export interface CartStore extends Readable<CartModel> {
 	addItem(product: Product, amount?: number): void;
 
 	removeItem(productId: string, amount?: number): void;
+
+	hasItems(): boolean;
 }
 
 const productIdEquals = pathEq(['product', 'id']);
@@ -121,6 +123,9 @@ export function createCartStore(items: CartItem[] = []): CartStore {
 
 				return newStoreValue;
 			});
+		},
+		hasItems(): boolean {
+			return get(innerStore)?.items?.length > 0 ?? false;
 		},
 	};
 }
