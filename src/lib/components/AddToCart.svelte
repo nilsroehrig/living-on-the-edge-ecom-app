@@ -27,14 +27,4 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-
-	input {
-		height: 2rem;
-		width: 2rem;
-		text-align: center;
-		padding: 0;
-		margin: 0 .5rem;
-		border-radius: .25rem;
-		border: solid thin #DDD;
-	}
 </style>

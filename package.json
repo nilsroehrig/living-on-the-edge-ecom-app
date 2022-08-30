@@ -1,20 +1,18 @@
 {
-	"name": "test-svelte-app",
+	"name": "living-on-the-edge-ecom-app",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"package": "vite package",
 		"preview": "vite preview",
-		"prepare": "vite sync",
-		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "playwright test",
-		"test:unit": "jest src/",
-		"test:unit:watch": "jest src/ --watch --no-cache"
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test": "jest src/",
+		"test:watch": "jest src/ --watch --no-cache"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.25.0",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-cloudflare": "^1.0.0-next.32",
 		"@sveltejs/kit": "^1.0.0-next.445",
