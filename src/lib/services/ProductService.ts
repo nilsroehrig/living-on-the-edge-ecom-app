@@ -1,31 +1,19 @@
-import products from '$lib/data/products.json';
 import type { Category } from '$lib/domain/Category';
 import type { CategorizedProduct, Product } from '$lib/domain/Product';
 import { Option } from 'prelude-ts';
-import { assoc, clone, filter, map, pipe, propEq } from 'ramda';
+import { assoc, isNil, map, prop, reduce } from 'ramda';
 
-export async function getSingleProduct (id: string): Promise<Option<Product>> {
-	return Option.ofNullable(
-		clone(products).find((product) => product.id === id),
-	);
-}
+export function createProductService(platform: App.Platform) {
+	if (isNil(platform?.env)) {
+		throw new TypeError('`platform.env` must have a value.');
+	}
 
-export async function getProductsByCategory (
-	category: Category,
-): Promise<CategorizedProduct[]> {
-	return pipe(
-		filter<Product>(propEq('category', category.id)),
-		map(assoc('category', category)),
-	)(products);
-}
-
-export function createProductService (platform: Required<Readonly<App.Platform>>) {
 	const store = platform.env.PRODUCTS;
 
 	return {
-		async getMultipleProducts (ids: string[]): Promise<Product[]> {
+		async getMultipleProducts(ids: string[]): Promise<Product[]> {
 			const settled = await Promise.allSettled(
-				ids.map((id) => store.get<Product>(id, { type: 'json' })),
+				ids.map((id) => store.get<Product>(id, { type: 'json' }))
 			);
 			return settled.reduce((acc, it) => {
 				if (it.status === 'rejected') {
@@ -39,6 +27,33 @@ export function createProductService (platform: Required<Readonly<App.Platform>>
 
 				return acc.concat(it.value);
 			}, [] as Product[]);
+		},
+		async getProductsByCategory(
+			category: Category
+		): Promise<CategorizedProduct[]> {
+			const productKeys = await store
+				.list()
+				.then(prop('keys'))
+				.then(map(prop('name')));
+
+			return Promise.allSettled(
+				map((key) => store.get<Product>(key, { type: 'json' }), productKeys)
+			).then(
+				reduce((acc, it) => {
+					if (
+						it.status === 'rejected' ||
+						it.value == null ||
+						it.value.category !== category.id
+					) {
+						return acc;
+					}
+
+					return acc.concat(assoc('category', category, it.value));
+				}, [] as CategorizedProduct[])
+			);
+		},
+		async getSingleProduct(id: string): Promise<Option<Product>> {
+			return store.get<Product>(id, { type: 'json' }).then(Option.ofNullable);
 		},
 	};
 }
