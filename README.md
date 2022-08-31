@@ -11,14 +11,18 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 - [x] Local Persistence for Cart (e.g. LocalStorage)
 - [x] Cart Overview
 - [x] Handle amount on cart overview
-- [ ] Build for Cloudflare
+- [x] Build for Cloudflare
 - [ ] Adapt products and categories to Workers KV
-- [ ] Use Durable Objects for Cart
-
-# Optional for Meetup
+- [ ] Add demo user profiles & login (KV)
+- [ ] Allow reviews for products (KV)
 - [ ] Desktop Styling
-- [ ] Simple Checkout Flow
 - [ ] Use Services everywhere
+
+## Optional for now
+- [ ] Simple Checkout Flow
+- [ ] Save orders to KV 
+- [ ] Some kind of Storage for orders
+- [ ] Write some comments to explain demo app
 
 ## Developing
 
