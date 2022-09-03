@@ -1,11 +1,12 @@
 <script lang="ts">
+	import ProductCard from '$lib/components/ProductCard.svelte';
 	import type { Category } from '$lib/domain/Category';
 	import type { Product } from '$lib/domain/Product';
 	import { SimpleGrid } from '@svelteuidev/core';
-	import ProductCard from '../lib/components/ProductCard.svelte';
 	//import type { PageData } from './$types';
 
-	export let data;
+	// TODO: reinstate type import, once support in idea has landed
+	export let data: any = {};
 	let category: Category, products: Product[];
 
 	$: ({ category, products } = data);

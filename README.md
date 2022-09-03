@@ -23,6 +23,9 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 - [ ] Save orders to KV 
 - [ ] Some kind of Storage for orders
 - [ ] Write some comments to explain demo app
+- [ ] Remove unnecessary allSettled handlings
+- [ ] Use Option more effectively (e.g. category service)
+- [ ] Rethink data model for relationships (e.g. Product.category)
 
 ## Developing
 

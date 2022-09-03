@@ -1,11 +1,13 @@
 <script lang="ts">
-	import DefaultGrid from '../../../lib/components/layout/DefaultGrid.svelte';
-	import ProductCard from '../../../lib/components/ProductCard.svelte';
-	import type { Category } from '../../../lib/domain/Category';
-	import type { CategorizedProduct } from '../../../lib/domain/Product';
+	import DefaultGrid from '$lib/components/layout/DefaultGrid.svelte';
+	import ProductCard from '$lib/components/ProductCard.svelte';
+	import type { Category } from '$lib/domain/Category';
+	import type { ProductWithCategory } from '$lib/domain/Product';
+	// import type { PageData } from './$types';
 
-	export let data;
-	let category: Category, products: CategorizedProduct[];
+	// TODO: reinstate type import, once support in idea has landed
+	export let data: any = {};
+	let category: Category, products: ProductWithCategory[];
 
 	$: ({ category, products } = data);
 </script>

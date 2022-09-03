@@ -1,11 +1,13 @@
 <script lang="ts">
+	import Cart from '$lib/components/Cart.svelte';
+	import type { Category } from '$lib/domain/Category';
+	import { createCartStore } from '$lib/stores/cart';
 	import { Container, Group, SvelteUIProvider } from '@svelteuidev/core';
 	import { setContext } from 'svelte';
-	import Cart from '../lib/components/Cart.svelte';
-	import type { Category } from '../lib/domain/Category';
-	import { createCartStore } from '../lib/stores/cart';
+	//import type { LayoutData } from './$types';
 
-	export let data;
+	// TODO: reinstate type import, once support in idea has landed
+	export let data: any;
 	let categories: Category[] = [];
 	$: categories = data?.categories ?? categories;
 

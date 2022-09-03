@@ -12,6 +12,10 @@ export interface Product {
   filename: string;
 }
 
-export interface CategorizedProduct extends Product {
+export interface ProductWithCategoryId extends Product {
+  category: string;
+}
+
+export interface ProductWithCategory extends Product {
   category: Category;
 }

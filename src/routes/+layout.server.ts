@@ -1,7 +1,10 @@
-import { getAllCategories } from '../lib/services/CategoryService';
+import { createCategoryService } from '../lib/services/CategoryService';
+import type { LayoutServerLoad } from './$types';
 
-export const load = async () => {
+export const load: LayoutServerLoad = async ({ platform }) => {
+	const categoryService = createCategoryService(platform);
+
 	return {
-		categories: await getAllCategories(),
+		categories: await categoryService.getAllCategories(),
 	};
 };

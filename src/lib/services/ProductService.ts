@@ -1,5 +1,9 @@
 import type { Category } from '$lib/domain/Category';
-import type { CategorizedProduct, Product } from '$lib/domain/Product';
+import type {
+	ProductWithCategory,
+	Product,
+	ProductWithCategoryId,
+} from '$lib/domain/Product';
 import { Option } from 'prelude-ts';
 import { assoc, isNil, map, prop, reduce } from 'ramda';
 
@@ -30,7 +34,7 @@ export function createProductService(platform: App.Platform) {
 		},
 		async getProductsByCategory(
 			category: Category
-		): Promise<CategorizedProduct[]> {
+		): Promise<ProductWithCategory[]> {
 			const productKeys = await store
 				.list()
 				.then(prop('keys'))
@@ -49,11 +53,13 @@ export function createProductService(platform: App.Platform) {
 					}
 
 					return acc.concat(assoc('category', category, it.value));
-				}, [] as CategorizedProduct[])
+				}, [] as ProductWithCategory[])
 			);
 		},
-		async getSingleProduct(id: string): Promise<Option<Product>> {
-			return store.get<Product>(id, { type: 'json' }).then(Option.ofNullable);
+		async getSingleProduct(id: string): Promise<Option<ProductWithCategoryId>> {
+			return store
+				.get<ProductWithCategoryId>(id, { type: 'json' })
+				.then(Option.ofNullable);
 		},
 	};
 }

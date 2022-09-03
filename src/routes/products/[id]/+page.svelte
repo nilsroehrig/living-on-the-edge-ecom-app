@@ -2,13 +2,15 @@
 	import type { Product } from '$lib/domain/Product';
 	import { formatPrice } from '$lib/util/format';
 	import { Badge, Card } from '@svelteuidev/core';
-	import AddToCart from '../../../lib/components/AddToCart.svelte';
-	import type { Category } from '../../../lib/domain/Category';
+	import AddToCart from '$lib/components/AddToCart.svelte';
+	import type { Category } from '$lib/domain/Category';
+	// import type { PageData } from './$types';
 
 	const Section = Card.Section;
 
-	export let data;
-	let product: Product, category: Category | string;
+	// TODO: reinstate type import, once support in idea has landed
+	export let data: any = {};
+	let product: Product, category: Category | string | undefined;
 
 	$: ({ product } = data);
 	$: ({ category } = product);

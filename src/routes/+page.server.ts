@@ -1,7 +1,5 @@
-import { getRandomCategory } from '$lib/services/CategoryService';
-import {
-	createProductService,
-} from '$lib/services/ProductService';
+import { createCategoryService } from '$lib/services/CategoryService';
+import { createProductService } from '$lib/services/ProductService';
 import { error } from '@sveltejs/kit';
 import { isNil } from 'ramda';
 import type { PageServerLoad } from './$types';
@@ -22,10 +20,11 @@ export const load: PageServerLoad = async ({ platform }) => {
 		throw error(500);
 	}
 
-	// @ts-ignore
-	const service = createProductService(platform);
+	const productsService = createProductService(platform);
+	const categoryService = createCategoryService(platform);
+
 	return {
-		category: await getRandomCategory(),
-		products: await service.getMultipleProducts(featuredIds),
+		category: await categoryService.getRandomCategory(),
+		products: await productsService.getMultipleProducts(featuredIds),
 	};
 };
