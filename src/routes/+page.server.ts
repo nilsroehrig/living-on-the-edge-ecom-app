@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ platform }) => {
 	);
 
 	if (isNil(featuredIds)) {
-		throw error(500);
+		throw error(500, `featuredIds: ${featuredIds}`);
 	}
 
 	const productsService = createProductService(platform);
