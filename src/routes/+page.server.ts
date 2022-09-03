@@ -9,15 +9,15 @@ export const load: PageServerLoad = async ({ platform }) => {
 		throw error(500, `platform: ${platform}, env: ${platform?.env}`);
 	}
 
-	const featuredIds: string[] | null = await platform.env.CONTENT.get(
-		'featuredIds',
+	const featuredProducts: string[] | null = await platform.env.CONTENT.get(
+		'featuredProducts',
 		{
 			type: 'json',
 		}
 	);
 
-	if (isNil(featuredIds)) {
-		throw error(500, `featuredIds: ${featuredIds}`);
+	if (isNil(featuredProducts)) {
+		throw error(500, `featuredProducts: ${featuredProducts}`);
 	}
 
 	const productsService = createProductService(platform);
@@ -25,6 +25,6 @@ export const load: PageServerLoad = async ({ platform }) => {
 
 	return {
 		category: await categoryService.getRandomCategory(),
-		products: await productsService.getMultipleProducts(featuredIds),
+		products: await productsService.getMultipleProducts(featuredProducts),
 	};
 };
