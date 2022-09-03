@@ -1,10 +1,12 @@
 import { dev } from '$app/environment';
 import type { Handle } from '@sveltejs/kit';
 import { isNil } from 'ramda';
-import { categoryStore, contentStore, productStore } from './kv-mock';
 
-export const handle: Handle = ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
 	if (dev && isNil(event.platform)) {
+		const { categoryStore, contentStore, productStore } = await import(
+			'./kv-mock'
+		);
 		event.platform = {
 			env: {
 				PRODUCTS: productStore,

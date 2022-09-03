@@ -12,7 +12,7 @@ Companion app for my talk "Living on the Edge - Web-Apps mit SvelteKit und Cloud
 - [x] Cart Overview
 - [x] Handle amount on cart overview
 - [x] Build for Cloudflare
-- [ ] Adapt products and categories to Workers KV
+- [x] Adapt products and categories to Workers KV
 - [ ] Add demo user profiles & login (KV)
 - [ ] Allow reviews for products (KV)
 - [ ] Desktop Styling
