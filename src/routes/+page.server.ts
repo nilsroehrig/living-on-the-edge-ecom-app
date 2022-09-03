@@ -6,7 +6,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ platform }) => {
 	if (isNil(platform?.env)) {
-		throw error(500);
+		throw error(500, `platform: ${platform}, env: ${platform?.env}`);
 	}
 
 	const featuredIds: string[] | null = await platform.env.CONTENT.get(
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ platform }) => {
 	);
 
 	if (isNil(featuredIds)) {
-		throw error(500);
+		throw error(500, `featuredIds: ${featuredIds}`);
 	}
 
 	const productsService = createProductService(platform);
