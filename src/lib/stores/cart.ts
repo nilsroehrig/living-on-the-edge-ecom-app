@@ -114,6 +114,7 @@ function setCartStorage(newValue: CartModel) {
 	localStorage.setItem('cart', JSON.stringify(newValue));
 }
 
+// TODO: why is not Option<CartModel> used here?
 function getCartStorage(): Some<CartModel> | None<CartModel> {
 	if (typeof localStorage == 'undefined') return Option.none();
 

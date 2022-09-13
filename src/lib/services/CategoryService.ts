@@ -19,14 +19,14 @@ export function createCategoryService(platform: App.Platform) {
 				.then((categoryRequests) => reject(isNil, categoryRequests));
 		},
 
-		async getRandomCategory(): Promise<Category> {
+		async getRandomCategory(): Promise<Option<Category>> {
 			return store
 				.list()
 				.then(prop('keys'))
 				.then((keys) => keys[Math.floor(Math.random() * keys.length)])
 				.then(prop('name'))
 				.then((id) => store.get<Category>(id, 'json'))
-				.then((category) => (category === null ? ({} as Category) : category));
+				.then(Option.ofNullable);
 		},
 
 		async getSingleCategoryBySlug(slug: string): Promise<Option<Category>> {

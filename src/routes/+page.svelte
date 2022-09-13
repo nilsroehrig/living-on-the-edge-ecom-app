@@ -7,21 +7,23 @@
 
 	// TODO: reinstate type import, once support in idea has landed
 	export let data: any = {};
-	let category: Category, products: Product[];
+	let category: Category | undefined, products: Product[];
 
 	$: ({ category, products } = data);
 </script>
 
-<a
-	href="/categories/{category.slug}"
-	class="hero"
-	style:background-image={`url(/hero/${category.hero})`}
->
+{#if category}
+	<a
+		href="/categories/{category.slug}"
+		class="hero"
+		style:background-image={`url(/hero/${category.hero})`}
+	>
   <span>
     Explore all our awesome products within the <strong>{category.name}</strong>
     category!
   </span>
-</a>
+	</a>
+{/if}
 
 <div class="featured-products">
 	<SimpleGrid

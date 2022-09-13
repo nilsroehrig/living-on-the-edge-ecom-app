@@ -36,12 +36,12 @@
 		Total
 		<span class="amount">{formatPrice($cart.value)}</span>
 	</div>
-	<div class="checkout">
-		<Button size="md">
-			Proceed to checkout
-			<Icon src={ChevronRight} size="1rem" slot="rightIcon"/>
-		</Button>
-	</div>
+<!--	<div class="checkout">-->
+<!--		<Button size="md">-->
+<!--			Proceed to checkout-->
+<!--			<Icon src={ChevronRight} size="1rem" slot="rightIcon"/>-->
+<!--		</Button>-->
+<!--	</div>-->
 {/if}
 
 <style>
