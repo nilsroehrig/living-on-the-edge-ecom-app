@@ -10,7 +10,8 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test": "jest src/",
-		"test:watch": "jest src/ --watch --no-cache"
+		"test:watch": "jest src/ --watch --no-cache",
+		"postinstall": "patch-package"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^3.15.0",
@@ -40,6 +41,7 @@
 		"@svelteuidev/composables": "^0.7.1",
 		"@svelteuidev/core": "^0.7.2",
 		"jest": "^28.1.3",
+		"patch-package": "^6.4.7",
 		"prelude-ts": "^1.0.4",
 		"ramda": "^0.28.0",
 		"showdown": "^2.1.0"
